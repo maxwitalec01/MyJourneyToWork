@@ -225,6 +225,43 @@ namespace Calculator
             // Testing
             Assert.That(result, Is.EqualTo(1260).Within(0.001));
         }
+        [Test]
+        public void SustainabilityWeighting_CorrectForCycling()
+        {
+            // Construct Calculator
+            Calculator calculator = new Calculator
+            {
+                distance = 20, // Replace with your desired distance
+                milesOrKms = DistanceMeasurement.miles,
+                numDays = 5, // Replace with your desired number of days
+                transportMode = TransportModes.cycling
+            };
 
+            // Testing sustainability weighting
+            double result = calculator.sustainabilityWeighting;
+
+            // Testing
+            Assert.AreEqual(0.005 * 20 * (5 * 2), result, 0.001); // Adjust the expected value and delta as needed
+        }
+
+        [Test]
+        public void SustainabilityWeighting_CorrectForTram()
+        {
+            // Construct Calculator
+            Calculator calculator = new Calculator
+            {
+                distance = 15, // Replace with your desired distance
+                milesOrKms = DistanceMeasurement.miles,
+                numDays = 3, // Replace with your desired number of days
+                transportMode = TransportModes.tram
+            };
+
+            // Testing sustainability weighting
+            double result = calculator.sustainabilityWeighting;
+
+            // Testing
+            Assert.AreEqual(3 * 15 * (3 * 2), result, 0.001);
+        }
     }
+
 }
