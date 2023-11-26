@@ -26,7 +26,7 @@ namespace Calculator
             double result = calculator.convertDistance();
 
             // Testing
-            Assert.AreEqual(100, result, 0.001);
+            Assert.That(result, Is.EqualTo(100).Within(0.001));
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace Calculator
             double result = calculator.convertDistance();
 
             // Testing
-            Assert.AreEqual(100, result);
+            Assert.That(result, Is.EqualTo(100));
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace Calculator
             double result = calculator.sustainabilityWeighting;
 
             // Testing
-            Assert.AreEqual(2400, result);
+            Assert.That(result, Is.EqualTo(2400));
         }
 
         [Test]
@@ -232,7 +232,7 @@ namespace Calculator
             double result = calculator.sustainabilityWeighting;
 
             // Testing
-            Assert.AreEqual(0.005 * 20 * (5 * 2), result, 0.001); // Adjust the expected value and delta as needed
+            Assert.That(result, Is.EqualTo(0.005 * 20 * (5 * 2)).Within(0.001));
         }
 
         [Test]
@@ -251,7 +251,7 @@ namespace Calculator
             double result = calculator.sustainabilityWeighting;
 
             // Testing
-            Assert.AreEqual(3 * 15 * (3 * 2), result, 0.001);
+            Assert.That(result, Is.EqualTo(3 * 15 * (3 * 2)).Within(0.001));
         }
         [Test]
         public void TestSustainabilityMessage_GreatJob()
@@ -267,7 +267,7 @@ namespace Calculator
             string message = calculator.SustainabilityMessage;
 
             // Testing
-            Assert.AreEqual("Great job! Your transportation choice is environmentally friendly.", message);
+            Assert.That(message, Is.EqualTo("Great job! Your transportation choice is environmentally friendly."));
         }
 
 
@@ -285,7 +285,7 @@ namespace Calculator
             string message = calculator.SustainabilityMessage;
 
             // Testing
-            Assert.AreEqual("Consider choosing a more sustainable mode of transportation for a greener impact.", message);
+            Assert.That(message, Is.EqualTo("Consider choosing a more sustainable mode of transportation for a greener impact."));
         }
 
         [Test]
@@ -302,7 +302,7 @@ namespace Calculator
             string message = calculator.SustainabilityMessage;
 
             // Testing
-            Assert.AreEqual("Good effort! There's room for improvement, but you're on the right track.", message);
+            Assert.That(message, Is.EqualTo("Good effort! There's room for improvement, but you're on the right track."));
         }
 
         [Test]
@@ -361,7 +361,7 @@ namespace MyJourneyToWork.Tests.Pages
             calculatorModel.calculator = calculator;
 
             // Testing
-            Assert.AreEqual(calculator, calculatorModel.calculator);
+            Assert.That(calculatorModel.calculator, Is.EqualTo(calculator));
         }
     }
 
@@ -418,7 +418,7 @@ namespace MyJourneyToWork.Tests.Pages
             errorModel.OnGet();
 
             // Assert
-            Assert.AreEqual("HttpContextTestId", errorModel.RequestId);
+            Assert.That(errorModel.RequestId, Is.EqualTo("HttpContextTestId"));
             Assert.IsTrue(errorModel.ShowRequestId);
         }
     }

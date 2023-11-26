@@ -12,6 +12,7 @@ namespace MyJourneyToWork.Pages
             _logger = logger;
         }
 
+        // The OnGet method is intentionally left empty as this page does not perform any logic on HTTP GET requests.
         public void OnGet()
         {
 
