@@ -61,8 +61,6 @@ namespace Calculator
                 return this.distance;
         }
 
-
-
         // calculate sustainability number
         [DisplayName("Your Sustainability Weighting:")]
         public double sustainabilityWeighting
@@ -117,25 +115,6 @@ namespace Calculator
                     total = transportModeWeighting[(int)TransportModes.walking] * convertDistance() * (this.numDays * 2);
                 }
                 return total;
-            }
-        }
-        [DisplayName("Sustainability Message:")]
-        public string SustainabilityMessage
-        {
-            get
-            {
-                if (sustainabilityWeighting <= 30)
-                {
-                    return "Great job! Your transportation choice is environmentally friendly.";
-                }
-                else if (sustainabilityWeighting <= 60)
-                {
-                    return "Good effort! There's room for improvement, but you're on the right track.";
-                }
-                else
-                {
-                    return "Consider choosing a more sustainable mode of transportation for a greener impact.";
-                }
             }
         }
     }
