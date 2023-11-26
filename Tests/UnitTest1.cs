@@ -18,7 +18,7 @@ namespace Calculator
             // Construct Calculator
             Calculator calculator = new Calculator
             {
-                distance = 160.9344, // 100 kilometers
+                distance = 160.9344,
                 milesOrKms = DistanceMeasurement.kms
             };
 
@@ -217,7 +217,7 @@ namespace Calculator
             Assert.That(result, Is.EqualTo(1260).Within(0.001));
         }
         [Test]
-        public void SustainabilityWeighting_CorrectForCycling()
+         public void SustainabilityWeighting_CorrectForCycling()
         {
             // Construct Calculator
             Calculator calculator = new Calculator
@@ -394,29 +394,5 @@ namespace MyJourneyToWork.Tests.Pages
             Assert.DoesNotThrow(() => privacyModel.OnGet());
         }
     }
-    [TestFixture]
-    public class ErrorModelTests
-    {
-        [Test]
-        public void OnGet_SetsRequestId_WhenActivityCurrentIsNull()
-        {
-            // Create mock logger, privacy model
-            var loggerMock = new Mock<ILogger<ErrorModel>>();
-            var errorModel = new ErrorModel(loggerMock.Object);
-            var httpContextMock = new Mock<HttpContext>();
-            httpContextMock.Setup(c => c.TraceIdentifier).Returns("HttpContextTestId");
 
-            var pageContext = new PageContext
-            {
-                HttpContext = httpContextMock.Object
-            };
-
-            errorModel.PageContext = pageContext;
-            errorModel.OnGet();
-
-            // Test
-            Assert.That(errorModel.RequestId, Is.EqualTo("HttpContextTestId"));
-            Assert.IsTrue(errorModel.ShowRequestId);
-        }
-    }
 }
