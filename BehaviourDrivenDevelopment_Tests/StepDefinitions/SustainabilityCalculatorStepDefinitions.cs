@@ -49,18 +49,8 @@ public class CalculatorSteps
     }
 
     [Then(@"the result should be (.*)")]
-    public void ThenTheResultShouldBe(string expectedExpression)
+    public void ThenTheResultShouldBe(double expectedValue)
     {
-        double expectedValue = EvaluateExpression(expectedExpression);
         Assert.AreEqual(expectedValue, calculatedSustainabilityWeighting, 0.001);
-    }
-
-    private double EvaluateExpression(string expression)
-    {
-        DataTable table = new DataTable();
-        table.Columns.Add("expression", typeof(string), expression);
-        DataRow row = table.NewRow();
-        table.Rows.Add(row);
-        return double.Parse((string)row["expression"]);
     }
 }

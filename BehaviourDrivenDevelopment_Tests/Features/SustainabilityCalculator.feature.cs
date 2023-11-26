@@ -113,7 +113,7 @@ namespace BehaviourDrivenDevelopment_Tests.Features
     testRunner.When("I calculate the sustainability weighting", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 8
-    testRunner.Then("the result should be 0.005 * 20 * (5 * 2)", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("the result should be 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -159,7 +159,7 @@ namespace BehaviourDrivenDevelopment_Tests.Features
     testRunner.When("I calculate the sustainability weighting", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 15
-    testRunner.Then("the result should be 0.005 * 5 * (3 * 2)", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("the result should be 0.15", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -205,7 +205,7 @@ namespace BehaviourDrivenDevelopment_Tests.Features
     testRunner.When("I calculate the sustainability weighting", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 22
-    testRunner.Then("the result should be 10 * 30 * (4 * 2)", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("the result should be 2400", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
