@@ -1,3 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
+using MyJourneyToWork.Pages;
+using Moq;
+
 namespace Calculator
 {
     [TestFixture]
@@ -113,24 +120,6 @@ namespace Calculator
             Assert.That(result, Is.EqualTo(960).Within(0.001));
         }
 
-        /*        [Test]
-                public void SustainabilityWeighting_WithInvalidDistance_ReturnsZero()
-                {
-                    // Construct Calculator
-                    Calculator calculator = new Calculator
-                    {
-                        distance = 1200, // Invalid distance (beyond the allowed range)
-                        milesOrKms = DistanceMeasurement.miles,
-                        numDays = 3,
-                        transportMode = TransportModes.bus
-                    };
-
-                    // Testing sustainability weighting
-                    double result = calculator.sustainabilityWeighting;
-
-                    // Testing
-                    Assert.AreEqual(0, result, 0.001); // Allow for a small variation due to floating-point precision
-                }*/
         [Test]
         public void SustainabilityWeighting_CorrectForDiesel()
         {
@@ -339,6 +328,59 @@ namespace Calculator
             // Testing
             Assert.That(calculator.numDays, Is.Not.InRange(Calculator.daysMin, Calculator.daysMax));
         }
+
+
+
     }
 
+
+
+}
+
+namespace MyJourneyToWork.Tests.Pages
+{
+    [TestFixture]
+    public class CalculatorModelTests
+    {
+        [Test]
+        public void OnGet_Always_ShouldDoNothing()
+        {
+            // Create CalculatorModel
+            var calculatorModel = new CalculatorModel();
+
+            // GET request
+            calculatorModel.OnGet();
+
+            // Testing
+            Assert.Pass("OnGet method executed without errors");
+        }
+
+        [Test]
+        public void BindProperty_ShouldBeSetOnPostRequest()
+        {
+            // Create CalculatorModel and Calculator
+            var calculatorModel = new CalculatorModel();
+            var calculator = new Calculator.Calculator();
+
+            calculatorModel.calculator = calculator;
+
+            // Testing
+            Assert.AreEqual(calculator, calculatorModel.calculator);
+        }
+    }
+
+    [TestFixture]
+    public class IndexModelTests
+    {
+        [Test]
+        public void OnGet_ShouldNotThrowException()
+        {
+            // Create mock logger and index model
+            var loggerMock = new Mock<ILogger<IndexModel>>();
+            var indexModel = new IndexModel(loggerMock.Object);
+
+            // Test
+            Assert.DoesNotThrow(() => indexModel.OnGet());
+        }
+    }
 }
