@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using MyJourneyToWork.Pages;
 using Moq;
+using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
 
 namespace Calculator
 {
@@ -390,6 +392,34 @@ namespace MyJourneyToWork.Tests.Pages
 
             // Test
             Assert.DoesNotThrow(() => privacyModel.OnGet());
+        }
+    }
+    [TestFixture]
+    public class ErrorModelTests
+    {
+        [Test]
+        public void OnGet_SetsRequestId_WhenActivityCurrentIsNull()
+        {
+            // Arrange
+            var loggerMock = new Mock<ILogger<ErrorModel>>();
+            var errorModel = new ErrorModel(loggerMock.Object);
+
+            var httpContextMock = new Mock<HttpContext>();
+            httpContextMock.Setup(c => c.TraceIdentifier).Returns("HttpContextTestId");
+
+            var pageContext = new PageContext
+            {
+                HttpContext = httpContextMock.Object
+            };
+
+            errorModel.PageContext = pageContext;
+
+            // Act
+            errorModel.OnGet();
+
+            // Assert
+            Assert.AreEqual("HttpContextTestId", errorModel.RequestId);
+            Assert.IsTrue(errorModel.ShowRequestId);
         }
     }
 }
