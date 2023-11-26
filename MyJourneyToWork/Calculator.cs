@@ -117,6 +117,7 @@ namespace Calculator
                 return total;
             }
         }
+        // Extra Feature Added
         [DisplayName("Sustainability Message:")]
         public string SustainabilityMessage
         {
