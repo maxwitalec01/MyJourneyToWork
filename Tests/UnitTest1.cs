@@ -328,13 +328,7 @@ namespace Calculator
             // Testing
             Assert.That(calculator.numDays, Is.Not.InRange(Calculator.daysMin, Calculator.daysMax));
         }
-
-
-
     }
-
-
-
 }
 
 namespace MyJourneyToWork.Tests.Pages
@@ -381,6 +375,21 @@ namespace MyJourneyToWork.Tests.Pages
 
             // Test
             Assert.DoesNotThrow(() => indexModel.OnGet());
+        }
+    }
+
+    [TestFixture]
+    public class PrivacyModelTests
+    {
+        [Test]
+        public void OnGet_ShouldNotThrowException()
+        {
+            // Create mock logger and privacy model
+            var loggerMock = new Mock<ILogger<PrivacyModel>>();
+            var privacyModel = new PrivacyModel(loggerMock.Object);
+
+            // Test
+            Assert.DoesNotThrow(() => privacyModel.OnGet());
         }
     }
 }
