@@ -307,11 +307,37 @@ namespace Calculator
             calculator.milesOrKms = DistanceMeasurement.miles;
             calculator.numDays = 1;
 
-            // Act
+            // Retrieve Sustainability message
             string message = calculator.SustainabilityMessage;
 
             // Testing
             Assert.AreEqual("Good effort! There's room for improvement, but you're on the right track.", message);
+        }
+
+        [Test]
+        public void NumDays_ValidRange_ReturnsTrue()
+        {
+            // Construct Calculator
+            Calculator calculator = new Calculator();
+
+            // Assign number of days
+            calculator.numDays = 4; // Any value between minimum and maximum
+
+            // Testing
+            Assert.That(calculator.numDays, Is.InRange(Calculator.daysMin, Calculator.daysMax));
+        }
+
+        [Test]
+        public void NumDays_OutsideRange_ReturnsFalse()
+        {
+            // Construct Calculator
+            Calculator calculator = new Calculator();
+
+            // Assign number of days
+            calculator.numDays = 8; // Any value between minimum and maximum
+
+            // Testing
+            Assert.That(calculator.numDays, Is.Not.InRange(Calculator.daysMin, Calculator.daysMax));
         }
     }
 
