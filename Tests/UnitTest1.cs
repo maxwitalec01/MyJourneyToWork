@@ -380,7 +380,7 @@ namespace MyJourneyToWork.Tests.Pages
         }
     }
 
-    [TestFixture]
+    [TestFixture] 
     public class PrivacyModelTests
     {
         [Test]
@@ -400,10 +400,9 @@ namespace MyJourneyToWork.Tests.Pages
         [Test]
         public void OnGet_SetsRequestId_WhenActivityCurrentIsNull()
         {
-            // Arrange
+            // Create mock logger, privacy model
             var loggerMock = new Mock<ILogger<ErrorModel>>();
             var errorModel = new ErrorModel(loggerMock.Object);
-
             var httpContextMock = new Mock<HttpContext>();
             httpContextMock.Setup(c => c.TraceIdentifier).Returns("HttpContextTestId");
 
@@ -413,11 +412,9 @@ namespace MyJourneyToWork.Tests.Pages
             };
 
             errorModel.PageContext = pageContext;
-
-            // Act
             errorModel.OnGet();
 
-            // Assert
+            // Test
             Assert.That(errorModel.RequestId, Is.EqualTo("HttpContextTestId"));
             Assert.IsTrue(errorModel.ShowRequestId);
         }
