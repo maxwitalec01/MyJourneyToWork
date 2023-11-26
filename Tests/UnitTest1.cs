@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace Calculator
 {
     [TestFixture]
@@ -262,6 +264,60 @@ namespace Calculator
             // Testing
             Assert.AreEqual(3 * 15 * (3 * 2), result, 0.001);
         }
+
+
+        [Test]
+        public void TestSustainabilityMessage_GreatJob()
+        {
+            // Construct Calculator
+            Calculator calculator = new Calculator();
+            calculator.transportMode = TransportModes.petrol;
+            calculator.distance = 1; // Set a value within the range
+            calculator.milesOrKms = DistanceMeasurement.miles;
+            calculator.numDays = 1;
+
+            // Retrieve Sustainability message
+            string message = calculator.SustainabilityMessage;
+
+            // Testing
+            Assert.AreEqual("Great job! Your transportation choice is environmentally friendly.", message);
+        }
+
+
+        [Test]
+        public void TestSustainabilityMessage_ConsiderChoosing()
+        {
+            // Construct Calculator
+            Calculator calculator = new Calculator();
+            calculator.transportMode = TransportModes.deisel;
+            calculator.distance = 70; // Set a value within the range
+            calculator.milesOrKms = DistanceMeasurement.miles;
+            calculator.numDays = 7;
+
+            // Retrieve Sustainability message
+            string message = calculator.SustainabilityMessage;
+
+            // Testing
+            Assert.AreEqual("Consider choosing a more sustainable mode of transportation for a greener impact.", message);
+        }
+
+        [Test]
+        public void TestSustainabilityMessage_GoodEffort()
+        {
+            // Arrange
+            Calculator calculator = new Calculator();
+            calculator.transportMode = TransportModes.hybrid;
+            calculator.distance = 5; // Set a value within the range
+            calculator.milesOrKms = DistanceMeasurement.miles;
+            calculator.numDays = 1;
+
+            // Act
+            string message = calculator.SustainabilityMessage;
+
+            // Testing
+            Assert.AreEqual("Good effort! There's room for improvement, but you're on the right track.", message);
+        }
+
     }
 
 }
