@@ -34,7 +34,7 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
-  deploy:
+  production:
     runs-on: windows-latest
     needs: build
     environment:
@@ -56,6 +56,48 @@ jobs:
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5C92E321495B4DA5BDE53382F847D9DB }}
           package: .
 
+  staging:
+    runs-on: windows-latest
+    needs: build
+    environment:
+      name: 'STAGING'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: .net-app
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'ca3devopsmjtw'
+          slot-name: 'STAGING'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_STAGING }}
+          package: .
+  QA:
+        runs-on: windows-latest
+        needs: build
+        environment:
+          name: 'QA'
+          url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+        steps:
+          - name: Download artifact from build job
+            uses: actions/download-artifact@v3
+            with:
+              name: .net-app
+
+          - name: Deploy to Azure Web App
+            id: deploy-to-webapp
+            uses: azure/webapps-deploy@v2
+            with:
+              app-name: 'ca3devopsmjtw'
+              slot-name: 'QA'
+              publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_QA }}
+              package: .
    # new job for end to end testing
   e2e-testing:
     runs-on: windows-latest
