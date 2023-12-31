@@ -452,7 +452,7 @@ namespace PlaywrightTests
 		[Test]
 		public async Task HomePageTest()
 		{
-			await Page.GotoAsync("https://ca3devopsmjtw.azurewebsites.net/");
+			await Page.GotoAsync("https://ca3devopsmjtw-qa.azurewebsites.net/");
 
 			// Assert Statement to make sure "Welcome" is displaying on this page
 			var welcomeHeading =  Page.GetByRole(AriaRole.Heading, new() { Name = "Welcome" });
@@ -465,7 +465,7 @@ namespace PlaywrightTests
 		public async Task PrivacyPageTest()
 		{
 
-			await Page.GotoAsync("https://ca3devopsmjtw.azurewebsites.net/");
+			await Page.GotoAsync("https://ca3devopsmjtw-qa.azurewebsites.net/");
 
 			await Page.GetByRole(AriaRole.List).GetByRole(AriaRole.Link, new() { Name = "Privacy" }).ClickAsync();
 

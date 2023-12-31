@@ -112,6 +112,48 @@ jobs:
     - name: Run local k6 test
       uses: grafana/k6-action@v0.2.0
       with: 
-        filename: PerformanceTesting/test.js
+        filename: Tests\PerformanceTesting\LoadTest.js
+      env:
+       GITHUB_WORKSPACE: ${{github.workspace}}
+
+  k6_smoke_test:
+    name: k6 Smoke Test
+    runs-on: ubuntu-latest
+    needs: QA
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Run local k6 test
+      uses: grafana/k6-action@v0.2.0
+      with: 
+        filename: Tests\PerformanceTesting\SmokeTest.js
+      env:
+       GITHUB_WORKSPACE: ${{github.workspace}}
+
+  k6_spike_test:
+    name: k6 Spike Test
+    runs-on: ubuntu-latest
+    needs: QA
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Run local k6 test
+      uses: grafana/k6-action@v0.2.0
+      with: 
+        filename: Tests\PerformanceTesting\SpikeTest.js
+      env:
+       GITHUB_WORKSPACE: ${{github.workspace}}
+
+  k6_stress_test:
+    name: k6 stress Test
+    runs-on: ubuntu-latest
+    needs: QA
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Run local k6 test
+      uses: grafana/k6-action@v0.2.0
+      with: 
+        filename: Tests\PerformanceTesting\StressTest.js
       env:
        GITHUB_WORKSPACE: ${{github.workspace}}
