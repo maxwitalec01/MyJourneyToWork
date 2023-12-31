@@ -161,7 +161,7 @@ jobs:
   swap-to-green-slot:
     runs-on: ubuntu-latest
     environment: Production
-    needs: deploy_to_production
+    needs: QA
     steps:
       - name: "Checkout GitHub Action"
         uses: actions/checkout@main
