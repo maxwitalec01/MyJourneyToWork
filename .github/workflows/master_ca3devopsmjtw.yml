@@ -55,3 +55,33 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5C92E321495B4DA5BDE53382F847D9DB }}
           package: .
+
+   # new job for end to end testing
+  e2e-testing:
+    runs-on: windows-latest
+    needs: deploy
+
+    # checks out repo, grabs copy
+    steps:
+      - name: Check out Repository
+        uses: actions/checkout@v4
+        with:
+          name: .net-app
+
+    # installs .net
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '7.x'
+          include-prerelease: true
+
+
+    # runs e2e tests
+      - name: run e2e test
+        run: |
+            cd Tests
+            dotnet build
+            pwsh bin/Debug/net7.0/playwright.ps1 install
+            dotnet test -- NUnit.NumberOfTestWorkers=5
+
+  

@@ -1,15 +1,16 @@
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using MyJourneyToWork.Pages;
 using Moq;
 using Microsoft.AspNetCore.Http;
-using System.Diagnostics;
+using System.Text.RegularExpressions;
+using Microsoft.Playwright;
+using Microsoft.Playwright.NUnit;
+
 
 namespace Calculator
 {
-    [TestFixture]
+	[TestFixture]
     public class CalculatorTests
     {
         [Test]
@@ -335,7 +336,7 @@ namespace Calculator
 
 namespace MyJourneyToWork.Tests.Pages
 {
-    [TestFixture]
+	[TestFixture]
     public class CalculatorModelTests
     {
         [Test]
@@ -420,3 +421,69 @@ namespace MyJourneyToWork.Tests.Pages
         }
     }
 }
+
+namespace PlaywrightTests
+{
+	[Parallelizable(ParallelScope.Self)]
+    [TestFixture]
+    public class Tests : PageTest
+    {
+        [Test]
+        public async Task HomepageHasPlaywrightInTitleAndGetStartedLinkLinkingtoTheIntroPage()
+        {
+            await Page.GotoAsync("https://playwright.dev");
+
+            // Expect a title "to contain" a substring.
+            await Expect(Page).ToHaveTitleAsync(new Regex("Playwright"));
+
+            // create a locator
+            var getStarted = Page.GetByRole(AriaRole.Link, new() { Name = "Get started" });
+
+            // Expect an attribute "to be strictly equal" to the value.
+            await Expect(getStarted).ToHaveAttributeAsync("href", "/docs/intro");
+
+            // Click the get started link.
+            await getStarted.ClickAsync();
+
+            // Expects the URL to contain intro.
+            await Expect(Page).ToHaveURLAsync(new Regex(".*intro"));
+        }
+
+		[Test]
+		public async Task HomePageTest()
+		{
+			await Page.GotoAsync("https://ca3devopsmjtw.azurewebsites.net/");
+
+			// Assert Statement to make sure "Welcome" is displaying on this page
+			var welcomeHeading =  Page.GetByRole(AriaRole.Heading, new() { Name = "Welcome" });
+			Assert.IsNotNull(welcomeHeading, "The 'Welcome' heading is not displayed on the page.");
+			await welcomeHeading.ClickAsync();
+
+		}
+
+		[Test]
+		public async Task PrivacyPageTest()
+		{
+
+			await Page.GotoAsync("https://ca3devopsmjtw.azurewebsites.net/");
+
+			await Page.GetByRole(AriaRole.List).GetByRole(AriaRole.Link, new() { Name = "Privacy" }).ClickAsync();
+
+			// Assert Statement to make sure "Privacy Policy" is displaying on this page
+			var privacyPolicyHeading = Page.GetByRole(AriaRole.Heading, new() { Name = "Privacy Policy" });
+			Assert.IsNotNull(privacyPolicyHeading, "The 'Privacy Policy' heading is not displayed on the page.");
+			await privacyPolicyHeading.ClickAsync();
+
+			// Assert Statement to make sure "Use this page to detail your" is displaying on this page
+			var privacyDetailText = Page.GetByText("Use this page to detail your");
+			Assert.IsNotNull(privacyDetailText, "The text 'Use this page to detail your' is not displayed on the page.");
+			await privacyDetailText.ClickAsync();
+
+		}
+
+
+}
+
+
+}
+
