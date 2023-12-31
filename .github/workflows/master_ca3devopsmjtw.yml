@@ -101,7 +101,7 @@ jobs:
    # new job for end to end testing
   e2e-testing:
     runs-on: windows-latest
-    needs: deploy
+    needs: QA
 
     # checks out repo, grabs copy
     steps:
