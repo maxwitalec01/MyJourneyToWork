@@ -112,7 +112,7 @@ jobs:
     - name: Run local k6 test
       uses: grafana/k6-action@v0.2.0
       with: 
-        filename: Tests/PerformanceTesting/LoadTest.js
+        filename: "Tests/PerformanceTesting/LoadTest.js"
       env:
        GITHUB_WORKSPACE: ${{ github.workspace }}
 
@@ -126,7 +126,7 @@ jobs:
     - name: Run local k6 test
       uses: grafana/k6-action@v0.2.0
       with: 
-        filename: Tests/PerformanceTesting/SmokeTest.js
+        filename: "Tests/PerformanceTesting/SmokeTest.js"
       env:
        GITHUB_WORKSPACE: ${{ github.workspace }}
 
@@ -140,7 +140,7 @@ jobs:
     - name: Run local k6 test
       uses: grafana/k6-action@v0.2.0
       with: 
-        filename: Tests/PerformanceTesting/SpikeTest.js
+        filename: "Tests/PerformanceTesting/SpikeTest.js"
       env:
        GITHUB_WORKSPACE: ${{ github.workspace }}
 
