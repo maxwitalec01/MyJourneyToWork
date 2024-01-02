@@ -68,7 +68,7 @@ jobs:
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
   production:
     runs-on: windows-latest
-    needs: build
+    needs: staging
     environment:
       name: Production
       url: '${{ steps.deploy-to-webapp.outputs.webapp-url }}'
@@ -90,7 +90,7 @@ jobs:
           package: .
   staging:
     runs-on: windows-latest
-    needs: build
+    needs: [e2e-testing, k6_load_test, k6_smoke_test, k6_spike_test, k6_stress_test]
     environment:
       name: STAGING
       url: '${{ steps.deploy-to-webapp.outputs.webapp-url }}'
@@ -204,7 +204,7 @@ jobs:
   swap-to-green-slot:
     runs-on: ubuntu-latest
     environment: Production
-    needs: QA
+    needs: production
     steps:
       - name: "Checkout GitHub Action"
         uses: actions/checkout@main
