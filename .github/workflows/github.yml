@@ -64,7 +64,7 @@ jobs:
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
   production:
     runs-on: windows-latest
-    needs: build
+    needs: staging
     environment:
       name: Production
       url: '${{ steps.deploy-to-webapp.outputs.webapp-url }}'
