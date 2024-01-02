@@ -86,7 +86,7 @@ jobs:
           package: .
   staging:
     runs-on: windows-latest
-    needs: QA 
+    needs: [e2e-testing, k6_load_test, k6_smoke_test, k6_spike_test, k6_stress_test, security_test]
     environment:
       name: STAGING
       url: '${{ steps.deploy-to-webapp.outputs.webapp-url }}'
@@ -211,7 +211,7 @@ jobs:
     name: Swap to Green Slot
     runs-on: ubuntu-latest
     environment: Production
-    needs: QA
+    needs: production
     steps:
       - name: "Checkout GitHub Action"
         uses: actions/checkout@main
