@@ -12,6 +12,6 @@ export default () => {
     // MORE STEPS
     // Here you can have more steps or complex script
     // Step1
-    // Step2
+    // Step2s
     // etc.
 };
