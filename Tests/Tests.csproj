@@ -24,8 +24,4 @@
     <ProjectReference Include="..\MyJourneyToWork\MyJourneyToWork.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="PerformanceTesting\" />
-  </ItemGroup>
-
 </Project>

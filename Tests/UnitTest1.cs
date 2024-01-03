@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using System.Text.RegularExpressions;
 using Microsoft.Playwright;
 using Microsoft.Playwright.NUnit;
+using System.Transactions;
 
 
 namespace Calculator
@@ -428,27 +429,6 @@ namespace PlaywrightTests
     [TestFixture]
     public class Tests : PageTest
     {
-        [Test]
-        public async Task HomepageHasPlaywrightInTitleAndGetStartedLinkLinkingtoTheIntroPage()
-        {
-            await Page.GotoAsync("https://playwright.dev");
-
-            // Expect a title "to contain" a substring.
-            await Expect(Page).ToHaveTitleAsync(new Regex("Playwright"));
-
-            // create a locator
-            var getStarted = Page.GetByRole(AriaRole.Link, new() { Name = "Get started" });
-
-            // Expect an attribute "to be strictly equal" to the value.
-            await Expect(getStarted).ToHaveAttributeAsync("href", "/docs/intro");
-
-            // Click the get started link.
-            await getStarted.ClickAsync();
-
-            // Expects the URL to contain intro.
-            await Expect(Page).ToHaveURLAsync(new Regex(".*intro"));
-        }
-
 		[Test]
 		public async Task HomePageTest()
 		{
@@ -481,8 +461,79 @@ namespace PlaywrightTests
 
 		}
 
+		[Test]
+		public async Task PetrolKilometersCalculatorTest()
+		{
+           
+			await Page.GotoAsync("https://ca3devopsmjtw-qa.azurewebsites.net/");
 
-}
+            // Nav to Calc
+			await Page.GetByRole(AriaRole.Link, new() { Name = "Calculator" }).ClickAsync();
+
+            // Enter number of days
+			await Page.GetByLabel("Enter the number of days you").ClickAsync();
+			await Page.GetByLabel("Enter the number of days you").FillAsync("2");
+
+            // Enter Distance travelled to Work
+			await Page.GetByLabel("Enter Your Distance to work (").ClickAsync();
+			await Page.GetByLabel("Enter Your Distance to work (").FillAsync("2");
+
+
+			// Select Distance Measurement
+			await Page.GetByLabel("Select A Distance Measurement:").SelectOptionAsync("Kilometers");
+
+			// Select the transport mode
+			await Page.GetByLabel("Select A Transport mode:").SelectOptionAsync("Petrol");
+
+			// Press the calculate button
+			await Page.GetByRole(AriaRole.Button, new() { Name = "Calculate" }).ClickAsync();
+
+            // Assert to check sustainability weightting.
+			var SustainabilityWeighting = await Page.GetByText("Your Sustainability Weighting: 39.76775630318937").InnerTextAsync();
+            Assert.AreEqual("Your Sustainability Weighting: 39.76775630318937", SustainabilityWeighting);
+
+			// Assert message about sustainability weighting
+			var SustainabilityWeightingMessage = await Page.GetByText("Sustainability Message: Good effort! There's room for improvement, but you're on the right track.").InnerTextAsync();
+			Assert.AreEqual("Sustainability Message: Good effort! There's room for improvement, but you're on the right track.", SustainabilityWeightingMessage);
+		}
+
+		[Test]
+		public async Task DieselMilesCalculatorTest()
+		{
+
+			await Page.GotoAsync("https://ca3devopsmjtw-qa.azurewebsites.net/");
+
+			// Nav to Calc
+			await Page.GetByRole(AriaRole.Link, new() { Name = "Calculator" }).ClickAsync();
+
+			// Enter number of days
+			await Page.GetByLabel("Enter the number of days you").ClickAsync();
+			await Page.GetByLabel("Enter the number of days you").FillAsync("5");
+
+			// Enter Distance travelled to Work
+			await Page.GetByLabel("Enter Your Distance to work (").ClickAsync();
+			await Page.GetByLabel("Enter Your Distance to work (").FillAsync("10");
+
+			// Select the transport mode
+			await Page.GetByLabel("Select A Distance Measurement:").SelectOptionAsync("Miles");
+
+			// Select Distance Measurement
+			await Page.GetByLabel("Select A Transport mode:").SelectOptionAsync("Diesel");
+
+			// Press the calculate button
+			await Page.GetByRole(AriaRole.Button, new() { Name = "Calculate" }).ClickAsync();
+
+			// Assert to check sustainability weightting.
+			var SustainabilityWeighting = await Page.GetByText("Your Sustainability Weighting: 1000").InnerTextAsync();
+			Assert.AreEqual("Your Sustainability Weighting: 1000", SustainabilityWeighting);
+
+			// Assert message about sustainability weighting
+			var SustainabilityWeightingMessage = await Page.GetByText("Sustainability Message: Consider choosing a more sustainable mode of transportation for a greener impact.").InnerTextAsync();
+			Assert.AreEqual("Sustainability Message: Consider choosing a more sustainable mode of transportation for a greener impact.", SustainabilityWeightingMessage);
+		}
+
+
+	}
 
 
 }
